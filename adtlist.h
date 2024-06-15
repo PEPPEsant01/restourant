@@ -1,40 +1,45 @@
-#ifndef ADTLIST_H
-#define ADTLIST_H
-
 #include <stdio.h>
 #include <stdlib.h>
+#include "item.h"
 
-typedef struct {
-    char *name;
-    float price;
-    //char **ingredients;
-    int date;
-    int shipped;
-} data;
+#define NULLITEM 0
 
-typedef struct list{
-    struct list *next;
-    struct list *prec;
-    data item;
-    int *count;
-} list;
 
-data extractitem(list *list, int position);
-data extractthis(list *list);
-list* movelist(list *list, int position);
-list* headlist(list *list);
-list* taillist(list *list);
-list* newlist(data item);
-list* catlist(list *list1, list *list2);
-list* newlistnumbered(data *item, int numbered);
-list* deleteitem(list *list, int posixion);
-list* searchitem(data *item, list *list);
-int searchposix(data *item, list *list);
-list* precelement(list *list);
-list* nextelement(list *list);
-int listvalid(list *list);
-list* copylist(list *list1);
-list* upplist(list *list1);
-int listcount(list *list);
 
-#endif
+
+
+typedef struct node *list;
+struct node {
+    list next;
+    list prev;
+    item item;
+    int *size;
+};
+
+// utilita di movimento di base della lista
+list newlist(item item);
+list prevelement(list list);
+list nextelement(list list);
+list headlist(list list);
+list taillist(list list);
+
+// utilita di gestione della lista
+list catlist(list list1, list list2);
+int listsize(list list);
+list movelist(list list, int pos);
+list deletethis(list list);
+list deleteitem(list list, int pos);
+void clearlist(list list);
+
+// utilita di ricerca nella lista
+int searchposix(item item, list list);
+list searchitem(item item, list list);
+item extractthis(list list);
+item extractitem(list list, int pos);
+
+// utilita avanzate lista
+list additem(item item,list list, int pos);
+list reloaditem(item item, list list);
+list copylist(list list);
+list upplist(list list);
+
